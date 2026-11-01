@@ -1,1 +1,665 @@
 
+
+<!doctype html>
+
+<html lang="de">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta name="theme-color" content="#0a1020">
+
+<title>Dashboard Artur</title>
+
+<style>
+
+:root{--bg:#090f1d;--panel:#111c30;--panel2:#17253d;--line:#263650;--txt:#f2f6fc;--muted:#91a2bb;--blue:#64aaff;--cyan:#57d4e8;--green:#42d6a0;--gold:#f4c45e;--pink:#d68cff;--shadow:0 18px 48px #0005}
+
+*{box-sizing:border-box}
+
+body{margin:0;background:radial-gradient(ellipse at 12% -5%,#1b3760 0,transparent 35%),radial-gradient(ellipse at 100% 30%,#251a46 0,transparent 30%),var(--bg);color:var(--txt);font:15px/1.45 Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+
+.wrap{max-width:1220px;margin:auto;padding:25px 20px 48px}
+
+.top{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:22px}
+
+.brand{display:flex;align-items:center;gap:13px}
+
+.logo{width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#3d8cff,#8758d9);display:grid;place-items:center;font-weight:900;font-size:19px;box-shadow:0 8px 25px #478fff44}
+
+.kicker{font-size:10px;letter-spacing:2.4px;color:var(--cyan);font-weight:850}
+
+.title{font-size:clamp(27px,4vw,39px);font-weight:850;letter-spacing:-1.4px;margin:1px 0}
+
+.subtitle{color:var(--muted);font-size:13px}
+
+.topright{display:flex;align-items:center;gap:9px}
+
+.live{border:1px solid #24664f;background:#103528;color:#8ae4bd;border-radius:99px;padding:7px 11px;font-size:10px;letter-spacing:1px;font-weight:850}
+
+.datechip{color:#c5d3e6;background:#ffffff0a;border:1px solid var(--line);border-radius:99px;padding:8px 12px;font-size:12px}
+
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:15px}
+
+.card{background:linear-gradient(145deg,#16243aee,#101a2cee);border:1px solid #2a3b56;border-radius:21px;padding:19px;box-shadow:var(--shadow);min-width:0;overflow:hidden}
+
+.clock{grid-column:span 5}.weather{grid-column:span 7}.market{grid-column:span 6}.radio{grid-column:span 6}.calendar{grid-column:span 12}
+
+.head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+
+.label{font-size:10px;letter-spacing:1.7px;text-transform:uppercase;color:var(--muted);font-weight:850}
+
+.symbol{font-size:22px}
+
+.time{font-size:clamp(43px,7vw,70px);line-height:1.05;letter-spacing:-3.5px;font-weight:850;font-variant-numeric:tabular-nums;margin:15px 0 7px}
+
+.dayline{font-size:14px;color:#c9d6e8}
+
+.clockfoot{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+
+.tag{border:1px solid #ffffff12;background:#ffffff08;color:#b9c8dc;padding:6px 9px;border-radius:9px;font-size:10px}
+
+.weatherhero{display:flex;align-items:center;gap:17px;margin:5px 0 17px}
+
+.weatherico{font-size:54px;filter:drop-shadow(0 7px 13px #0005)}
+
+.temp{font-size:43px;font-weight:850;letter-spacing:-2px;line-height:1}
+
+.weatherdesc{color:#c7d4e6;margin-top:6px}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+
+.stat{background:#ffffff08;border:1px solid #ffffff0d;border-radius:12px;padding:10px}
+
+.stat b{font-size:14px;display:block}.stat small{font-size:10px;color:var(--muted)}
+
+.marketgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+.asset{border-radius:16px;background:linear-gradient(140deg,#ffffff0b,#ffffff04);border:1px solid #ffffff12;padding:15px;min-width:0}
+
+.assethead{display:flex;align-items:center;gap:9px;color:#cbd8e9;font-size:12px;font-weight:800}
+
+.asseticon{width:35px;height:35px;border-radius:11px;display:grid;place-items:center;font-size:18px;font-weight:900;background:#f7931a22;color:#ffae45}
+
+.asseticon.au{background:#f4c45e20;color:var(--gold)}
+
+.price{font-size:clamp(23px,3vw,31px);font-weight:850;letter-spacing:-1px;margin:13px 0 3px;white-space:nowrap}
+
+.unit{font-size:11px;color:var(--muted)}
+
+.updated{font-size:10px;color:var(--muted);margin-top:12px}
+
+.radio{position:relative}
+
+.radio:before{content:"";position:absolute;width:190px;height:190px;right:-60px;top:-90px;border-radius:50%;background:#8e5be51c;filter:blur(3px)}
+
+.radioinner{position:relative}
+
+.station{display:flex;align-items:center;gap:12px;background:#ffffff08;border:1px solid #ffffff12;padding:13px;border-radius:15px;margin-top:10px}
+
+.stationlogo{width:43px;height:43px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#2e80e8,#55c8d5);font-size:12px;font-weight:900;flex-shrink:0}
+
+.stationlogo.party{background:linear-gradient(135deg,#a34fe2,#ef5c9c)}
+
+.stationinfo{min-width:0;flex:1}
+
+.stationname{font-weight:850;font-size:14px}
+
+.stationmeta{font-size:11px;color:var(--muted);margin-top:2px}
+
+.play{border:0;background:linear-gradient(135deg,#398bff,#765ce8);color:white;border-radius:12px;width:43px;height:43px;font-size:17px;cursor:pointer;box-shadow:0 7px 18px #397eff33}
+
+.play:active{transform:scale(.96)}
+
+.playerbar{display:flex;align-items:center;gap:10px;margin-top:13px;padding:10px 12px;border-radius:12px;background:#080f1d88;border:1px solid #ffffff10}
+
+.equalizer{display:flex;gap:3px;align-items:end;height:17px}
+
+.equalizer i{display:block;width:3px;background:var(--cyan);border-radius:4px;height:7px}
+
+.equalizer.playing i:nth-child(2){height:14px}
+
+.equalizer.playing i:nth-child(3){height:10px}
+
+.equalizer.playing i:nth-child(4){height:16px}
+
+.playertext{font-size:11px;color:#bdcbe0;flex:1}
+
+.vol{width:85px;accent-color:#65aaff}
+
+.calendarhead{display:flex;align-items:center;justify-content:space-between;gap:12px}
+
+.month{font-size:19px;font-weight:850;text-transform:capitalize}
+
+.nav{display:flex;gap:7px}
+
+.nav button{background:#1d3657;color:#dceaff;border:1px solid #36577d;border-radius:10px;padding:8px 12px;font-weight:800;cursor:pointer}
+
+.calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-top:15px}
+
+.weekday{text-align:center;color:var(--muted);font-size:10px;font-weight:850;padding:7px 0}
+
+.datecell{min-height:74px;border-radius:12px;background:#ffffff06;border:1px solid #ffffff0c;padding:8px;font-size:12px}
+
+.datecell.today{border-color:var(--blue);background:#438fff1a}
+
+.datecell.other{opacity:.27}
+
+.datecell .num{font-weight:800}
+
+.eventdot{display:block;margin-top:5px;border-radius:5px;background:#4b8fe5;color:white;padding:3px 5px;font-size:9px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.eventarea{margin-top:15px}
+
+.eventform{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px}
+
+.eventform input{width:100%;min-width:0;background:#0a1424;color:var(--txt);border:1px solid var(--line);border-radius:9px;padding:10px}
+
+.eventform button{background:#326fba;color:white;border:0;border-radius:9px;padding:10px 14px;font-weight:800;cursor:pointer}
+
+.eventlist{margin-top:12px;display:flex;flex-wrap:wrap;gap:7px}
+
+.eventitem{background:#ffffff0a;border:1px solid #ffffff12;border-radius:9px;padding:6px 9px;font-size:10px;color:#d5e1f0}
+
+.eventitem button{border:0;background:none;color:#ff9c9c;margin-left:6px;cursor:pointer}
+
+.foot{color:#71839d;font-size:10px;text-align:center;margin-top:22px}
+
+.status{font-size:10px;color:var(--muted);margin-top:9px}
+
+@media(max-width:780px){
+
+.wrap{padding:17px 12px 35px}
+
+.clock,.weather,.market,.radio,.calendar{grid-column:span 12}
+
+.time{font-size:60px}
+
+.top{align-items:flex-start}
+
+.topright{flex-direction:column;align-items:flex-end}
+
+.datechip{display:none}
+
+.stats{grid-template-columns:repeat(4,1fr)}
+
+.eventform{grid-template-columns:1fr 1fr}
+
+.eventform button{grid-column:span 2}
+
+.datecell{min-height:59px;padding:6px}
+
+.calgrid{gap:4px}
+
+}
+
+@media(max-width:390px){
+
+.marketgrid{grid-template-columns:1fr}
+
+.stats{grid-template-columns:repeat(2,1fr)}
+
+.datecell{min-height:48px}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrap">
+
+<header class="top">
+
+ <div class="brand"><div class="logo">A</div><div>
+
+ <div class="kicker">DEIN PERSÖNLICHES COCKPIT</div>
+
+ <div class="title">Dashboard Artur</div>
+
+ <div class="subtitle">Märkte · Wetter · Radio · Kalender</div>
+
+ </div></div>
+
+ <div class="topright"><div class="live">● LIVE-DATEN</div><div class="datechip" id="topdate">--</div></div>
+
+</header>
+
+<main class="grid">
+
+<section class="card clock">
+
+ <div class="head"><span class="label">Uhrzeit & Datum</span><span class="symbol">◷</span></div>
+
+ <div class="time" id="clock">--:--:--</div>
+
+ <div class="dayline" id="dateLine">Lade Datum …</div>
+
+ <div class="clockfoot"><span class="tag">📍 Wuppertal, Deutschland</span><span class="tag">Europe/Berlin</span></div>
+
+</section>
+
+<section class="card weather">
+
+ <div class="head"><span class="label">Aktuelles Wetter · Wuppertal</span><span class="symbol">🌦️</span></div>
+
+ <div class="weatherhero"><div class="weatherico" id="wIcon">⛅</div><div><div class="temp" id="temp">--°C</div><div class="weatherdesc" id="wDesc">Wetterdaten werden geladen …</div></div></div>
+
+ <div class="stats">
+
+ <div class="stat"><b id="feels">--°C</b><small>Gefühlt</small></div>
+
+ <div class="stat"><b id="wind">-- km/h</b><small>Wind</small></div>
+
+ <div class="stat"><b id="humidity">--%</b><small>Luftfeuchtigkeit</small></div>
+
+ <div class="stat"><b id="rain">--%</b><small>Regenrisiko</small></div>
+
+ </div>
+
+ <div class="status" id="wUpdate">Quelle: Open-Meteo</div>
+
+</section>
+
+<section class="card market">
+
+ <div class="head"><span class="label">Finanzmärkte</span><span class="symbol">📈</span></div>
+
+ <div class="marketgrid">
+
+ <div class="asset"><div class="assethead"><span class="asseticon">₿</span> BITCOIN</div><div class="price" id="btc">$ —</div><div class="unit">BTC / USD</div><div class="status" id="btcStatus">Kurs wird geladen …</div></div>
+
+ <div class="asset"><div class="assethead"><span class="asseticon au">Au</span> GOLD</div><div class="price" id="gold">$ —</div><div class="unit">USD / Feinunze (31,1035 g)</div><div class="status" id="goldStatus">Spotpreis wird geladen …</div></div>
+
+ </div>
+
+ <div class="updated" id="marketUpdate">Kurse werden automatisch aktualisiert.</div>
+
+</section>
+
+<section class="card radio">
+
+ <div class="radioinner">
+
+ <div class="head"><span class="label">Internet Radio</span><span class="symbol">📻</span></div>
+
+ <div class="station">
+
+ <div class="stationlogo">PARK</div>
+
+ <div class="stationinfo"><div class="stationname">Radio Park</div><div class="stationmeta">Polnische Musik · Live-Stream</div></div>
+
+ <button class="play" data-radio="park">▶</button>
+
+ </div>
+
+ <div class="station">
+
+ <div class="stationlogo party">RP</div>
+
+ <div class="stationinfo"><div class="stationname">RadioParty.pl</div><div class="stationmeta">Kanał Główny · Dance & Party</div></div>
+
+ <button class="play" data-radio="party">▶</button>
+
+ </div>
+
+ <div class="playerbar">
+
+ <div class="equalizer" id="eq"><i></i><i></i><i></i><i></i></div>
+
+ <div class="playertext" id="playerStatus">Wähle einen Sender zum Starten</div>
+
+ <input class="vol" id="volume" type="range" min="0" max="1" step=".05" value=".8">
+
+ </div>
+
+ <audio id="audio" preload="none" playsinline></audio>
+
+ <div class="status">Hinweis: Wiedergabe startet nach Tippen auf ▶. iPhone kann Hintergrundwiedergabe je nach Browser begrenzen.</div>
+
+ </div>
+
+</section>
+
+<section class="card calendar">
+
+ <div class="calendarhead">
+
+ <div><div class="label">Persönlicher Kalender</div><div class="month" id="month">Monat</div></div>
+
+ <div class="nav"><button id="prev">‹</button><button id="next">›</button></div>
+
+ </div>
+
+ <div class="calgrid" id="cal"></div>
+
+ <div class="eventarea">
+
+ <form class="eventform" id="eventForm">
+
+ <input type="date" id="eventDate" required>
+
+ <input type="text" id="eventTitle" placeholder="Termin / Erinnerung" maxlength="60" required>
+
+ <button type="submit">+ Termin speichern</button>
+
+ </form>
+
+ </div>
+
+ <div class="eventlist" id="eventList"></div>
+
+ <div class="status">Termine werden lokal in diesem Browser gespeichert.</div>
+
+</section>
+
+</main>
+
+<div class="foot">Dashboard Artur · Wetter: Open-Meteo · Bitcoin: CoinGecko · Gold: Gold API · Radio: Original-Livestreams</div>
+
+</div>
+
+<script>
+
+const $=id=>document.getElementById(id);
+
+const money=(v,dec=0)=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:dec,maximumFractionDigits:dec}).format(v);
+
+function updateClock(){
+
+ const d=new Date();
+
+ $('clock').textContent=d.toLocaleTimeString('de-DE');
+
+ $('dateLine').textContent=d.toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+
+ $('topdate').textContent=d.toLocaleDateString('de-DE',{day:'2-digit',month:'short',year:'numeric'});
+
+}
+
+updateClock();
+
+setInterval(updateClock,1000);
+
+async function loadWeather(){
+
+ try{
+
+ const u='https://api.open-meteo.com/v1/forecast?latitude=51.2562&longitude=7.1508&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=precipitation_probability&forecast_days=1&timezone=Europe%2FBerlin';
+
+ const r=await fetch(u);
+
+ if(!r.ok)throw Error();
+
+ const j=await r.json(),c=j.current;
+
+ const codes={0:['Klarer Himmel','☀️'],1:['Überwiegend klar','🌤️'],2:['Teilweise bewölkt','⛅'],3:['Bewölkt','☁️'],45:['Neblig','🌫️'],48:['Nebel','🌫️'],51:['Leichter Nieselregen','🌦️'],53:['Nieselregen','🌦️'],55:['Starker Nieselregen','🌧️'],61:['Leichter Regen','🌦️'],63:['Regen','🌧️'],65:['Starker Regen','🌧️'],71:['Leichter Schnee','🌨️'],73:['Schneefall','❄️'],75:['Starker Schneefall','❄️'],80:['Regenschauer','🌦️'],81:['Regenschauer','🌧️'],82:['Starke Regenschauer','⛈️'],95:['Gewitter','⛈️']};
+
+ const w=codes[c.weather_code]||['Wetter aktuell','🌤️'];
+
+ $('wIcon').textContent=w[1];
+
+ $('wDesc').textContent=w[0];
+
+ $('temp').textContent=Math.round(c.temperature_2m)+'°C';
+
+ $('feels').textContent=Math.round(c.apparent_temperature)+'°C';
+
+ $('wind').textContent=Math.round(c.wind_speed_10m)+' km/h';
+
+ $('humidity').textContent=c.relative_humidity_2m+'%';
+
+ const hour=new Date(c.time).getHours();
+
+ const i=j.hourly.time.findIndex(t=>new Date(t).getHours()===hour);
+
+ $('rain').textContent=(i>=0?j.hourly.precipitation_probability[i]:0)+'%';
+
+ $('wUpdate').textContent='Aktualisiert: '+new Date(c.time).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+' · Open-Meteo';
+
+ }catch(e){$('wDesc').textContent='Wetterdaten momentan nicht verfügbar';}
+
+}
+
+async function loadMarkets(){
+
+ try{
+
+ const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+
+ if(!r.ok)throw Error();
+
+ const j=await r.json();
+
+ $('btc').textContent=money(j.bitcoin.usd,0);
+
+ $('btcStatus').textContent='BTC · USD';
+
+ }catch(e){
+
+ $('btc').textContent='Nicht verfügbar';
+
+ $('btcStatus').textContent='Kurs momentan nicht abrufbar';
+
+ }
+
+ try{
+
+ const r=await fetch('https://api.gold-api.com/price/XAU');
+
+ if(!r.ok)throw Error();
+
+ const j=await r.json();
+
+ $('gold').textContent=money(j.price,2);
+
+ $('goldStatus').textContent='Spotpreis · '+(j.updatedAtReadable||'aktuell');
+
+ }catch(e){
+
+ $('gold').textContent='Nicht verfügbar';
+
+ $('goldStatus').textContent='Goldpreis momentan nicht abrufbar';
+
+ }
+
+ $('marketUpdate').textContent='Letzte Abfrage: '+new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+' · Automatische Aktualisierung alle 60 Sekunden';
+
+}
+
+loadWeather();
+
+loadMarkets();
+
+setInterval(loadWeather,10*60*1000);
+
+setInterval(loadMarkets,60*1000);
+
+const streams={
+
+ park:'https://sluchaj2.radiopark.biz.pl:8443/stream',
+
+ party:'https://s2.radioparty.pl:8015/stream?nocache=4171'
+
+};
+
+let current=null;
+
+const audio=$('audio');
+
+audio.volume=.8;
+
+function setRadioButtons(){
+
+ document.querySelectorAll('[data-radio]').forEach(b=>{
+
+ b.textContent=(b.dataset.radio===current&&!audio.paused)?'Ⅱ':'▶';
+
+ });
+
+ $('eq').classList.toggle('playing',!audio.paused&&!audio.error);
+
+}
+
+document.querySelectorAll('[data-radio]').forEach(b=>b.addEventListener('click',async()=>{
+
+ const id=b.dataset.radio;
+
+ if(current===id&&!audio.paused){
+
+ audio.pause();
+
+ $('playerStatus').textContent='Wiedergabe pausiert';
+
+ setRadioButtons();
+
+ return;
+
+ }
+
+ current=id;
+
+ audio.src=streams[id];
+
+ $('playerStatus').textContent='Verbinde mit '+(id==='park'?'Radio Park':'RadioParty.pl')+' …';
+
+ setRadioButtons();
+
+ try{
+
+ await audio.play();
+
+ $('playerStatus').textContent='Jetzt läuft: '+(id==='park'?'Radio Park':'RadioParty.pl · Kanał Główny');
+
+ }catch(e){
+
+ $('playerStatus').textContent='Stream nicht gestartet. Bitte erneut tippen.';
+
+ }
+
+ setRadioButtons();
+
+}));
+
+audio.addEventListener('playing',setRadioButtons);
+
+audio.addEventListener('pause',setRadioButtons);
+
+audio.addEventListener('error',()=>{
+
+ $('playerStatus').textContent='Stream derzeit nicht erreichbar. Bitte später erneut versuchen.';
+
+ setRadioButtons();
+
+});
+
+$('volume').addEventListener('input',e=>audio.volume=Number(e.target.value));
+
+let monthCursor=new Date();
+
+monthCursor.setDate(1);
+
+let events=[];
+
+try{events=JSON.parse(localStorage.getItem('artur_dashboard_events')||'[]');}catch(e){}
+
+const pad=n=>String(n).padStart(2,'0');
+
+const keyDate=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+
+function drawCalendar(){
+
+ const y=monthCursor.getFullYear(),m=monthCursor.getMonth();
+
+ const first=new Date(y,m,1);
+
+ const days=new Date(y,m+1,0).getDate();
+
+ const offset=(first.getDay()+6)%7;
+
+ $('month').textContent=monthCursor.toLocaleDateString('de-DE',{month:'long',year:'numeric'});
+
+ const names=['MO','DI','MI','DO','FR','SA','SO'];
+
+ let h=names.map(n=>`<div class="weekday">${n}</div>`).join('');
+
+ for(let n=0;n<offset;n++)h+='<div class="datecell other"></div>';
+
+ for(let d=1;d<=days;d++){
+
+ const date=new Date(y,m,d),k=keyDate(date);
+
+ const today=k===keyDate(new Date());
+
+ const ev=events.filter(x=>x.date===k);
+
+ h+=`<div class="datecell ${today?'today':''}"><span class="num">${d}</span>${ev.slice(0,2).map(x=>`<span class="eventdot" title="${x.title.replace(/"/g,'&quot;')}">${x.title.replace(/[<>&]/g,'')}</span>`).join('')}</div>`;
+
+ }
+
+ $('cal').innerHTML=h;
+
+ renderEvents();
+
+}
+
+function renderEvents(){
+
+ const sorted=[...events].sort((a,b)=>a.date.localeCompare(b.date));
+
+ $('eventList').innerHTML=sorted.length?sorted.map(e=>`<span class="eventitem">${new Date(e.date+'T12:00:00').toLocaleDateString('de-DE')} · ${e.title.replace(/[<>&]/g,'')} <button type="button" data-del="${e.id}">×</button></span>`).join(''):'<span class="status">Noch keine Termine gespeichert.</span>';
+
+ document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
+
+ events=events.filter(e=>e.id!==b.dataset.del);
+
+ saveEvents();
+
+ });
+
+}
+
+function saveEvents(){
+
+ localStorage.setItem('artur_dashboard_events',JSON.stringify(events));
+
+ drawCalendar();
+
+}
+
+$('prev').onclick=()=>{monthCursor.setMonth(monthCursor.getMonth()-1);drawCalendar();};
+
+$('next').onclick=()=>{monthCursor.setMonth(monthCursor.getMonth()+1);drawCalendar();};
+
+$('eventDate').value=keyDate(new Date());
+
+$('eventForm').addEventListener('submit',e=>{
+
+ e.preventDefault();
+
+ const date=$('eventDate').value;
+
+ const title=$('eventTitle').value.trim();
+
+ if(!date||!title)return;
+
+ events.push({id:String(Date.now()),date,title});
+
+ $('eventTitle').value='';
+
+ saveEvents();
+
+});
+
+drawCalendar();
+
+</script>
+
+</body>
+
+</html>
